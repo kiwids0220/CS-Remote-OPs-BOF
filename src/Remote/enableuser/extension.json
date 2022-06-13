@@ -32,6 +32,6 @@
         "desc": "Username to unlock / enable",
         "type": "wstring",
         "optional": false
-      }
-    ]
-  }
+    }
+]
+}
