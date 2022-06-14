@@ -54,6 +54,71 @@ jobs:
         run: |
           chmod +x ./make_bof.sh
           ./make_bof.sh enableuser
+      
+      - name: ProcessDestroy
+        run: |
+          chmod +x ./make_bof.sh
+          ./make_bof.sh ProcessDestroy
+
+      - name: ProcessListHandles
+        run: |
+          chmod +x ./make_bof.sh
+          ./make_bof.sh ProcessListHandles
+
+      - name: reg_delete
+        run: |
+          chmod +x ./make_bof.sh
+          ./make_bof.sh reg_delete
+
+      - name: reg_save
+        run: |
+          chmod +x ./make_bof.sh
+          ./make_bof.sh reg_save
+
+      - name: sc_config
+        run: |
+          chmod +x ./make_bof.sh
+          ./make_bof.sh sc_config
+
+      - name: sc_create
+        run: |
+          chmod +x ./make_bof.sh
+          ./make_bof.sh sc_create
+
+      - name: sc_delete
+        run: |
+          chmod +x ./make_bof.sh
+          ./make_bof.sh sc_delete
+
+      - name: sc_description
+        run: |
+          chmod +x ./make_bof.sh
+          ./make_bof.sh sc_description
+
+      - name: sc_start
+        run: |
+          chmod +x ./make_bof.sh
+          ./make_bof.sh sc_start
+
+      - name: sc_stop
+        run: |
+          chmod +x ./make_bof.sh
+          ./make_bof.sh sc_stop
+
+      - name: schtasksdelete
+        run: |
+          chmod +x ./make_bof.sh
+          ./make_bof.sh schtasksdelete
+
+      - name: schtasksstop
+        run: |
+          chmod +x ./make_bof.sh
+          ./make_bof.sh schtasksstop
+
+      - name: setuserpass
+        run: |
+          chmod +x ./make_bof.sh
+          ./make_bof.sh setuserpass
 
       - name: "Publish Release"
         uses: "marvinpinto/action-automatic-releases@latest"
