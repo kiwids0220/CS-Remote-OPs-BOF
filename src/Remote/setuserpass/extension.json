@@ -38,7 +38,7 @@
     "desc": "password to set account to",
     "type": "wstring",
     "optional": false
-    },
+    }
 
 ]
 }
