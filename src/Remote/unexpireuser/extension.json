@@ -1,0 +1,37 @@
+{
+    "name": "unexpireuser",
+    "version": "0.0.0",
+    "command_name": "remote-unexpireuser",
+    "extension_author": "TrustedSec",
+    "original_author": "TrustedSec",
+    "repo_url": "https://github.com/sliverarmory/CS-Remote-OPs-BOF",
+    "help": "Enables and unlocks the specified user account",
+    "depends_on": "coff-loader",
+    "entrypoint": "go",
+    "files": [
+      {
+        "os": "windows",
+        "arch": "amd64",
+        "path": "unexpireuser.x64.o"
+      },
+      {
+        "os": "windows",
+        "arch": "386",
+        "path": "unexpireuser.x86.o"
+      }
+    ],
+    "arguments": [
+      {
+        "name": "username",
+        "desc": "ser name to activate/enable",
+        "type": "wstring",
+        "optional": false
+      },
+      {
+        "name": "domain",
+        "desc": "domain/computer for the account",
+        "type": "wstring",
+        "optional": false
+      }
+    ]
+  }

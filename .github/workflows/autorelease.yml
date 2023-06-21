@@ -170,6 +170,11 @@ jobs:
           chmod +x ./make_bof.sh
           ./make_bof.sh suspendresume
 
+      - name: unexpireuser
+        run: |
+          chmod +x ./make_bof.sh
+          ./make_bof.sh unexpireuser
+
       - name: "Publish Release"
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
