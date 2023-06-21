@@ -165,6 +165,11 @@ jobs:
           chmod +x ./make_bof.sh
           ./make_bof.sh shspawnas
 
+      - name: suspendresume
+        run: |
+          chmod +x ./make_bof.sh
+          ./make_bof.sh suspendresume
+
       - name: "Publish Release"
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
