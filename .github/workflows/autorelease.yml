@@ -80,6 +80,11 @@ jobs:
           chmod +x ./make_bof.sh
           ./make_bof.sh lastpass
 
+      - name: office_tokens
+        run: |
+          chmod +x ./make_bof.sh
+          ./make_bof.sh office_tokens
+
       - name: reg_delete
         run: |
           chmod +x ./make_bof.sh

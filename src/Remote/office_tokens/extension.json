@@ -1,0 +1,31 @@
+{
+    "name": "office-tokens",
+    "version": "0.0.0",
+    "command_name": "remote-office-tokens",
+    "extension_author": "TrustedSec",
+    "original_author": "TrustedSec",
+    "repo_url": "https://github.com/sliverarmory/CS-Remote-OPs-BOF",
+    "help": "Searches memory for Office JWT Access Tokens",
+    "depends_on": "coff-loader",
+    "entrypoint": "go",
+    "files": [
+      {
+        "os": "windows",
+        "arch": "amd64",
+        "path": "office_tokens.x64.o"
+      },
+      {
+        "os": "windows",
+        "arch": "386",
+        "path": "office_tokens.x86.o"
+      }
+    ],
+    "arguments": [
+      {
+        "name": "pid",
+        "desc": "pid",
+        "type": "int",
+        "optional": false
+      }
+    ]
+  }
