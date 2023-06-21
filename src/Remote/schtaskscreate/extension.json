@@ -1,0 +1,49 @@
+{
+    "name": "schtaskscreate",
+    "version": "0.0.0",
+    "command_name": "remote-schtaskscreate",
+    "extension_author": "TrustedSec",
+    "original_author": "TrustedSec",
+    "repo_url": "https://github.com/sliverarmory/CS-Remote-OPs-BOF",
+    "help": "Unlock and enable a local / remote user account",
+    "depends_on": "coff-loader",
+    "entrypoint": "go",
+    "files": [
+      {
+        "os": "windows",
+        "arch": "amd64",
+        "path": "schtaskscreate.x64.o"
+      },
+      {
+        "os": "windows",
+        "arch": "386",
+        "path": "schtaskscreate.x86.o"
+      }
+    ],
+    "arguments": [
+      {
+        "name": "hostname",
+        "desc": "target system",
+        "type": "wstring",
+        "optional": false
+      },
+      {
+        "name": "taskpath",
+        "desc": "path for created task",
+        "type": "wstring",
+        "optional": false
+      },
+      {
+        "name": "usermode",
+        "desc": "username for the task <USER | XML | SYSTEM>",
+        "type": "wstring",
+        "optional": false
+      },
+      {
+        "name": "forcemode",
+        "desc": "creation disposition <CREATE | UPDATE>",
+        "type": "wstring",
+        "optional": false
+      }
+    ]
+  }
