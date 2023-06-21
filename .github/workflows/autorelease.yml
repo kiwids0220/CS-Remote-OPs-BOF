@@ -55,6 +55,11 @@ jobs:
           chmod +x ./make_bof.sh
           ./make_bof.sh adcs_request
 
+      - name: adduser
+        run: |
+          chmod +x ./make_bof.sh
+          ./make_bof.sh adduser
+
       - name: chromeKey
         run: |
           chmod +x ./make_bof.sh

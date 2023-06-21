@@ -1,0 +1,43 @@
+{
+    "name": "adduser",
+    "version": "0.0.0",
+    "command_name": "remote-adduser",
+    "extension_author": "TrustedSec",
+    "original_author": "TrustedSec",
+    "repo_url": "https://github.com/sliverarmory/CS-Remote-OPs-BOF",
+    "help": "Add a new user to a machine",
+    "depends_on": "coff-loader",
+    "entrypoint": "go",
+    "files": [
+      {
+        "os": "windows",
+        "arch": "amd64",
+        "path": "addusertogroup.x64.o"
+      },
+      {
+        "os": "windows",
+        "arch": "386",
+        "path": "addusertogroup.x86.o"
+      }
+    ],
+    "arguments": [
+      {
+        "name": "username",
+        "desc": "name of new user",
+        "type": "wstring",
+        "optional": false
+      },
+      {
+        "name": "password",
+        "desc": "password of new user",
+        "type": "wstring",
+        "optional": false
+      },
+      {
+        "name": "server",
+        "desc": "target machine",
+        "type": "wstring",
+        "optional": false
+      }
+    ]
+  }
