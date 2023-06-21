@@ -1,0 +1,37 @@
+{
+    "name": "schtasksrun",
+    "version": "0.0.0",
+    "command_name": "remote-schtasksrun",
+    "extension_author": "TrustedSec",
+    "original_author": "TrustedSec",
+    "repo_url": "https://github.com/sliverarmory/CS-Remote-OPs-BOF",
+    "help": "run a scheduled task",
+    "depends_on": "coff-loader",
+    "entrypoint": "go",
+    "files": [
+      {
+        "os": "windows",
+        "arch": "amd64",
+        "path": "schtasksrun.x64.o"
+      },
+      {
+        "os": "windows",
+        "arch": "386",
+        "path": "schtasksrun.x86.o"
+      }
+    ],
+    "arguments": [
+      {
+        "name": "hostname",
+        "desc": "target system",
+        "type": "wstring",
+        "optional": false
+      },
+      {
+        "name": "taskname",
+        "desc": "scheduled task name (full path required, eg schtasksstop \\Microsoft\\Windows\\MUI\\LpRemove",
+        "type": "wstring",
+        "optional": false
+      }
+    ]
+  }

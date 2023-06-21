@@ -145,6 +145,11 @@ jobs:
           chmod +x ./make_bof.sh
           ./make_bof.sh schtasksdelete
 
+      - name: schtasksrun
+        run: |
+          chmod +x ./make_bof.sh
+          ./make_bof.sh schtasksrun
+
       - name: schtasksstop
         run: |
           chmod +x ./make_bof.sh
