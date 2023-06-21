@@ -60,6 +60,11 @@ jobs:
           chmod +x ./make_bof.sh
           ./make_bof.sh adduser
 
+      - name: addusertogroup
+        run: |
+          chmod +x ./make_bof.sh
+          ./make_bof.sh addusertogroup
+
       - name: chromeKey
         run: |
           chmod +x ./make_bof.sh
@@ -69,6 +74,11 @@ jobs:
         run: |
           chmod +x ./make_bof.sh
           ./make_bof.sh enableuser
+
+      - name: lastpass
+        run: |
+          chmod +x ./make_bof.sh
+          ./make_bof.sh lastpass
 
       - name: reg_delete
         run: |

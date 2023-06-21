@@ -1,0 +1,49 @@
+{
+    "name": "addusertogroup",
+    "version": "0.0.0",
+    "command_name": "remote-addusertogroup",
+    "extension_author": "TrustedSec",
+    "original_author": "TrustedSec",
+    "repo_url": "https://github.com/sliverarmory/CS-Remote-OPs-BOF",
+    "help": "Add the specified user to the domain group",
+    "depends_on": "coff-loader",
+    "entrypoint": "go",
+    "files": [
+      {
+        "os": "windows",
+        "arch": "amd64",
+        "path": "addusertogroup.x64.o"
+      },
+      {
+        "os": "windows",
+        "arch": "386",
+        "path": "addusertogroup.x86.o"
+      }
+    ],
+    "arguments": [
+      {
+        "name": "username",
+        "desc": "username to activate/enable",
+        "type": "wstring",
+        "optional": false
+      },
+      {
+        "name": "groupname",
+        "desc": "group to add user",
+        "type": "wstring",
+        "optional": false
+      },
+      {
+        "name": "server",
+        "desc": "computer to perform the operation on",
+        "type": "wstring",
+        "optional": false
+      },
+      {
+        "name": "domain",
+        "desc": "domain/computer for the account",
+        "type": "wstring",
+        "optional": false
+      }
+    ]
+  }
