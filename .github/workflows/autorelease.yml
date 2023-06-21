@@ -40,6 +40,16 @@ jobs:
         run: |
           mkdir packages
 
+      - name: ProcessDestroy
+        run: |
+          chmod +x ./make_bof.sh
+          ./make_bof.sh ProcessDestroy
+
+      - name: ProcessListHandles
+        run: |
+          chmod +x ./make_bof.sh
+          ./make_bof.sh ProcessListHandles
+          
       - name: adcs_request
         run: |
           chmod +x ./make_bof.sh
@@ -54,16 +64,6 @@ jobs:
         run: |
           chmod +x ./make_bof.sh
           ./make_bof.sh enableuser
-      
-      - name: ProcessDestroy
-        run: |
-          chmod +x ./make_bof.sh
-          ./make_bof.sh ProcessDestroy
-
-      - name: ProcessListHandles
-        run: |
-          chmod +x ./make_bof.sh
-          ./make_bof.sh ProcessListHandles
 
       - name: reg_delete
         run: |
