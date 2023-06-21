@@ -136,6 +136,7 @@ WINBASEAPI PCHAR __cdecl MSVCRT$strchr(const char *haystack, int needle);
 WINBASEAPI int __cdecl MSVCRT$strcmp(const char *_Str1,const char *_Str2);
 WINBASEAPI char * __cdecl MSVCRT$strcpy(char * __restrict__ __dst, const char * __restrict__ __src);
 WINBASEAPI size_t __cdecl MSVCRT$strlen(const char *_Str);
+WINBASEAPI int __cdecl MSVCRT$wcsncmp(const wchar_t *_Str1,const wchar_t *_Str2, size_t count);
 WINBASEAPI int __cdecl MSVCRT$strncmp(const char *_Str1,const char *_Str2,size_t _MaxCount);
 WINBASEAPI size_t __cdecl MSVCRT$strnlen(const char *_Str,size_t _MaxCount);
 WINBASEAPI PCHAR __cdecl MSVCRT$strstr(const char *haystack, const char *needle);
@@ -192,10 +193,14 @@ WINBASEAPI DWORD WINAPI NETAPI32$NetGroupGetUsers(LPCWSTR servername,LPCWSTR gro
 WINBASEAPI DWORD WINAPI NETAPI32$NetQueryDisplayInformation(LPCWSTR ServerName,DWORD Level,DWORD Index,DWORD EntriesRequested,DWORD PreferredMaximumLength,LPDWORD ReturnedEntryCount,PVOID *SortedBuffer);
 WINBASEAPI DWORD WINAPI NETAPI32$NetLocalGroupEnum(LPCWSTR servername,DWORD level,LPBYTE *bufptr,DWORD prefmaxlen,LPDWORD entriesread,LPDWORD totalentries,PDWORD_PTR resumehandle);
 WINBASEAPI DWORD WINAPI NETAPI32$NetLocalGroupGetMembers(LPCWSTR servername,LPCWSTR localgroupname,DWORD level,LPBYTE *bufptr,DWORD prefmaxlen,LPDWORD entriesread,LPDWORD totalentries,PDWORD_PTR resumehandle);
+WINBASEAPI DWORD WINAPI NETAPI32$NetLocalGroupAddMembers(LPCWSTR servername,LPCWSTR groupname,DWORD level,LPBYTE buf,DWORD totalentries);
 WINBASEAPI DWORD WINAPI NETAPI32$NetUserSetInfo(LPCWSTR servername,LPCWSTR username,DWORD level,LPBYTE buf,LPDWORD parm_err);
 WINBASEAPI DWORD WINAPI NETAPI32$NetShareEnum(LMSTR servername,DWORD level,LPBYTE *bufptr,DWORD prefmaxlen,LPDWORD entriesread,LPDWORD totalentries,LPDWORD resume_handle);
 WINBASEAPI DWORD WINAPI NETAPI32$NetSessionEnum(LPCWSTR servername, LPCWSTR UncClientName, LPCWSTR username, DWORD level, LPBYTE* bufptr, DWORD prefmaxlen, LPDWORD entriesread, LPDWORD totalentries, LPDWORD resumehandle);
 WINBASEAPI DWORD WINAPI NETAPI32$NetApiBufferFree(LPVOID Buffer);
+WINBASEAPI DWORD WINAPI NETAPI32$NetGroupAddUser(LPCWSTR servername,LPCWSTR GroupName,LPCWSTR userName);
+WINBASEAPI DWORD WINAPI NETAPI32$NetGroupAddUser(LPCWSTR servername,LPCWSTR GroupName,LPCWSTR userName);
+WINBASEAPI DWORD WINAPI NETAPI32$NetUserAdd(LPCWSTR servername, DWORD level, LPBYTE buf, LPDWORD parm_err);
 
 //MPR
 WINBASEAPI DWORD WINAPI MPR$WNetOpenEnumW(DWORD dwScope, DWORD dwType, DWORD dwUsage, LPNETRESOURCEW lpNetResource, LPHANDLE lphEnum);
@@ -530,6 +535,7 @@ DWORD WINAPI PSAPI$GetModuleBaseNameW(HANDLE hProcess,HMODULE hModule,LPWSTR lpB
 #define MSVCRT$strcmp strcmp
 #define MSVCRT$strcpy strcpy
 #define MSVCRT$strlen strlen
+#define MSVCRT$wcsncmp wcsncmp
 #define MSVCRT$strncmp strncmp
 #define MSVCRT$strnlen strnlen
 #define MSVCRT$strstr strstr
@@ -585,6 +591,8 @@ DWORD WINAPI PSAPI$GetModuleBaseNameW(HANDLE hProcess,HMODULE hModule,LPWSTR lpB
 #define NETAPI32$NetShareEnum NetShareEnum
 #define NETAPI32$NetSessionEnum NetSessionEnum
 #define NETAPI32$NetApiBufferFree NetApiBufferFree
+#define NETAPI32$NetGroupAddUser NetGroupAddUser
+#define NETAPI32$NetUserAdd NetUserAdd
 
 //MPR
 #define MPR$WNetOpenEnumW WNetOpenEnumW

