@@ -160,6 +160,11 @@ jobs:
           chmod +x ./make_bof.sh
           ./make_bof.sh setuserpass
 
+      - name: shspawnas
+        run: |
+          chmod +x ./make_bof.sh
+          ./make_bof.sh shspawnas
+
       - name: "Publish Release"
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
