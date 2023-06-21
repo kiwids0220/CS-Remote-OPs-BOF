@@ -1,0 +1,61 @@
+{
+    "name": "remote-reg-set",
+    "version": "0.0.0",
+    "command_name": "remote-reg-set",
+    "extension_author": "TrustedSec",
+    "original_author": "TrustedSec",
+    "repo_url": "https://github.com/sliverarmory/CS-Remote-OPs-BOF",
+    "help": "Dumps the specified process to the specified output file",
+    "depends_on": "coff-loader",
+    "entrypoint": "go",
+    "files": [
+      {
+        "os": "windows",
+        "arch": "amd64",
+        "path": "reg_set.x64.o"
+      },
+      {
+        "os": "windows",
+        "arch": "386",
+        "path": "reg_set.x86.o"
+      }
+    ],
+    "arguments": [
+      {
+        "name": "hostname",
+        "desc": "host to connect to and run the command on",
+        "type": "wstring",
+        "optional": false
+      },
+      {
+        "name": "hive",
+        "desc": "registry hive containing the REGPATH (eg, HKLM, HKCU, HKU, HKCR",
+        "type": "wstring",
+        "optional": false
+      },
+      {
+        "name": "key",
+        "desc": "registry path",
+        "type": "wstring",
+        "optional": false
+      },
+      {
+        "name": "value",
+        "desc": "value name",
+        "type": "wstring",
+        "optional": false
+      },
+      {
+        "name": "type",
+        "desc": "type of registry to create/set (eg REG_SZ, REG_EXPAND_SZ, REG_BINARY, REG_DWORD, REG_MULTI_SZ, REG_QWORD",
+        "type": "wstring",
+        "optional": false
+      },
+      {
+        "name": "data",
+        "desc": "data to store in registry value",
+        "type": "file",
+        "optional": false
+      }
+    ]
+  }

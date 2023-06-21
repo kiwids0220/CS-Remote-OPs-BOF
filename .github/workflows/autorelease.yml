@@ -100,6 +100,11 @@ jobs:
           chmod +x ./make_bof.sh
           ./make_bof.sh reg_save
 
+      - name: reg_set
+        run: |
+          chmod +x ./make_bof.sh
+          ./make_bof.sh reg_set
+
       - name: sc_config
         run: |
           chmod +x ./make_bof.sh
