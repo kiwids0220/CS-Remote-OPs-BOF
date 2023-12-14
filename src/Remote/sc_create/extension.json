@@ -62,6 +62,12 @@
         "desc": "start mode for service\n\t\t2=auto|3=demand|4=disable",
         "type": "short",
         "optional": false
+        },
+        {
+        "name": "type",
+        "desc": "The type of service to create. The valid options are:\n\t\t1 - SERVICE_FILE_SYSTEM_DRIVER (File system driver service)\n\t\t2 - SERVICE_KERNEL_DRIVER (Driver service)\n\t\t16 - SERVICE_WIN32_OWN_PROCESS (Service that runs in its own process)\n\t\t32 - SERVICE_WIN32_SHARE_PROCESS (Service that shares a process with one or more other services)",
+        "type": "short",
+        "optional": false
         }
 ]
 }
