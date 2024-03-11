@@ -20,6 +20,7 @@ You are welcome to use these, but issues opened related to these will be closed 
 |addusertogroup| Add specified user to a group|
 |chromeKey| Decrypt the provided base64 encoded Chrome key|
 |enableuser| Enable and unlock the specified user account|
+|get_priv| Activate the specified token privledge, more for non-cobalt strike users|
 |lastpass | Search Chrome, brave memory for LastPass passwords and data|
 |office_tokens| Collect Office JWT Tokens from any Office process|
 |procdump| Dump the specified process to the specified output file|
@@ -40,7 +41,9 @@ You are welcome to use these, but issues opened related to these will be closed 
 |schtasksstop| Stop a running scheduled task|
 |setuserpass| Set a user's password|
 |shspawnas| A misguided attempt at injecting code into a newly spawned process|
+|slack_cookie| Collect the Slack authentication cookie from a Slack process|
 |unexpireuser| Set a user account to never expire|
+|ghost_task| Add/Delete a ghost task.
 
 ## Contributing
 
