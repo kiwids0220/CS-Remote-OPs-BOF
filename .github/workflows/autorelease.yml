@@ -175,6 +175,26 @@ jobs:
           chmod +x ./make_bof.sh
           ./make_bof.sh unexpireuser
 
+      - name: get_priv
+        run: |
+          chmod +x ./make_bof.sh
+          ./make_bof.sh get_priv
+
+      - name: ghost_task
+        run: |
+          chmod +x ./make_bof.sh
+          ./make_bof.sh ghost_task
+
+      - name: sc_failure
+        run: |
+          chmod +x ./make_bof.sh
+          ./make_bof.sh sc_failure
+
+      - name: slack_cookie
+        run: |
+          chmod +x ./make_bof.sh
+          ./make_bof.sh slack_cookie
+
       - name: "Publish Release"
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
