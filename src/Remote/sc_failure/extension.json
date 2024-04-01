@@ -1,0 +1,67 @@
+{
+    "name": "sc_failure",
+    "version": "0.0.0",
+    "command_name": "remote-sc_failure",
+    "extension_author": "TrustedSec",
+    "original_author": "TrustedSec",
+    "repo_url": "https://github.com/sliverarmory/CS-Remote-OPs-BOF",
+    "help": "sc_failure",
+    "depends_on": "coff-loader",
+    "entrypoint": "go",
+    "files": [
+      {
+        "os": "windows",
+        "arch": "amd64",
+        "path": "sc_failure.x64.o"
+      },
+      {
+        "os": "windows",
+        "arch": "386",
+        "path": "sc_failure.x86.o"
+      }
+    ],
+    "arguments": [
+      {
+          "name": "hostname",
+          "desc": "hostname",
+          "type": "string",
+          "optional": false
+      },
+      {
+          "name": "servicename",
+          "desc": "servicename",
+          "type": "string",
+          "optional": false
+      },
+      {
+          "name": "resetPeriod",
+          "desc": "resetPeriod",
+          "type": "integer",
+          "optional": false
+      },
+      {
+          "name": "rebootMsg",
+          "desc": "rebootMsg",
+          "type": "string",
+          "optional": false
+      },
+      {
+          "name": "command",
+          "desc": "command",
+          "type": "string",
+          "optional": false
+      },
+      {
+          "name": "actions",
+          "desc": "actions",
+          "type": "integer",
+          "optional": false
+      },
+      {
+          "name": "saActions",
+          "desc": "saActions",
+          "type": "string",
+          "optional": false
+      }
+      ]
+  }
