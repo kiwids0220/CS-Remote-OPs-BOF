@@ -12,12 +12,12 @@
       {
         "os": "windows",
         "arch": "amd64",
-        "path": "addusertogroup.x64.o"
+        "path": "adduser.x64.o"
       },
       {
         "os": "windows",
         "arch": "386",
-        "path": "addusertogroup.x86.o"
+        "path": "adduser.x86.o"
       }
     ],
     "arguments": [
