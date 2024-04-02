@@ -73,7 +73,7 @@
       "name": "time",
       "desc": "time",
       "type": "string",
-      "optional": true
+      "optional": false
     },
     {
       "name": "day",
