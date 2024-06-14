@@ -195,6 +195,66 @@ jobs:
           chmod +x ./make_bof.sh
           ./make_bof.sh slack_cookie
 
+      - name: clipboard
+        run: |
+          chmod +x ./make_bof.sh
+          ./make_bof_injection.sh clipboard
+
+      - name: conhost
+        run: |
+          chmod +x ./make_bof.sh
+          ./make_bof_injection.sh conhost
+
+      - name: createremotethread
+        run: |
+          chmod +x ./make_bof.sh
+          ./make_bof_injection.sh createremotethread
+
+      - name: ctray
+        run: |
+          chmod +x ./make_bof.sh
+          ./make_bof_injection.sh ctray
+
+      - name: dde
+        run: |
+          chmod +x ./make_bof.sh
+          ./make_bof_injection.sh dde
+
+      - name: kernelcallbacktable
+        run: |
+          chmod +x ./make_bof.sh
+          ./make_bof_injection.sh kernelcallbacktable
+
+      - name: ntcreatethread
+        run: |
+          chmod +x ./make_bof.sh
+          ./make_bof_injection.sh ntcreatethread
+
+      - name: ntqueueapcthread
+        run: |
+          chmod +x ./make_bof.sh
+          ./make_bof_injection.sh ntqueueapcthread
+
+      - name: setthreadcontext
+        run: |
+          chmod +x ./make_bof.sh
+          ./make_bof_injection.sh setthreadcontext
+
+      - name: svcctrl
+        run: |
+          chmod +x ./make_bof.sh
+          ./make_bof_injection.sh svcctrl
+
+      - name: tooltip
+        run: |
+          chmod +x ./make_bof.sh
+          ./make_bof_injection.sh tooltip
+
+      - name: uxsubclassinfo
+        run: |
+          chmod +x ./make_bof.sh
+          ./make_bof_injection.sh uxsubclassinfo
+
       - name: "Publish Release"
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
