@@ -1,7 +1,7 @@
 {
     "name": "conhost",
-    "version": "v0.0.7",
-    "command_name": "inject-conhost",
+    "version": "v0.0.0",
+    "command_name": "remote-inject-conhost",
     "extension_author": "0xbad53c",
     "original_author": "TrustedSec",
     "repo_url": "https://github.com/sliverarmory/CS-Remote-OPs-BOF",
