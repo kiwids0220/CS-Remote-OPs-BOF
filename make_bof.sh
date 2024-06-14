@@ -3,8 +3,9 @@
 # variables
 HOME=$(pwd)
 BOF=$1
-SRCDIR="$HOME/src/Remote/$BOF"
-OUTDIR="$HOME/Remote/$BOF"
+BOFTYPE=$2
+SRCDIR="$HOME/src/$BOFTYPE/$BOF"
+OUTDIR="$HOME/$BOFTYPE/$BOF"
 PKGS=$HOME/packages
 
 # compile
@@ -19,7 +20,7 @@ mkdir artifacts # $SRCDIR/artifacts/
 mv $OUTDIR/*.o ./artifacts/
 VERSION=$(git describe --tags --abbrev=0)
 cat extension.json | jq ".version |= \"$VERSION\"" > ./artifacts/extension.json
-cd artifacts # ./src/Remote/$BOF/artifacts/
+cd artifacts # ./src/$BOFTYPE/$BOF/artifacts/
 echo
 pwd
 ls -l

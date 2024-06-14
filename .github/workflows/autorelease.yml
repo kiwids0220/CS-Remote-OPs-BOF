@@ -43,217 +43,217 @@ jobs:
       - name: ProcessDestroy
         run: |
           chmod +x ./make_bof.sh
-          ./make_bof.sh ProcessDestroy
+          ./make_bof.sh ProcessDestroy Remote
 
       - name: ProcessListHandles
         run: |
           chmod +x ./make_bof.sh
-          ./make_bof.sh ProcessListHandles
+          ./make_bof.sh ProcessListHandles Remote
           
       - name: adcs_request
         run: |
           chmod +x ./make_bof.sh
-          ./make_bof.sh adcs_request
+          ./make_bof.sh adcs_request Remote
 
       - name: adduser
         run: |
           chmod +x ./make_bof.sh
-          ./make_bof.sh adduser
+          ./make_bof.sh adduser Remote
 
       - name: addusertogroup
         run: |
           chmod +x ./make_bof.sh
-          ./make_bof.sh addusertogroup
+          ./make_bof.sh addusertogroup Remote
 
       - name: chromeKey
         run: |
           chmod +x ./make_bof.sh
-          ./make_bof.sh chromeKey
+          ./make_bof.sh chromeKey Remote
 
       - name: enableuser
         run: |
           chmod +x ./make_bof.sh
-          ./make_bof.sh enableuser
+          ./make_bof.sh enableuser Remote
 
       - name: lastpass
         run: |
           chmod +x ./make_bof.sh
-          ./make_bof.sh lastpass
+          ./make_bof.sh lastpass Remote
 
       - name: office_tokens
         run: |
           chmod +x ./make_bof.sh
-          ./make_bof.sh office_tokens
+          ./make_bof.sh office_tokens Remote
 
       - name: procdump
         run: |
           chmod +x ./make_bof.sh
-          ./make_bof.sh procdump
+          ./make_bof.sh procdump Remote
 
       - name: reg_delete
         run: |
           chmod +x ./make_bof.sh
-          ./make_bof.sh reg_delete
+          ./make_bof.sh reg_delete Remote
 
       - name: reg_save
         run: |
           chmod +x ./make_bof.sh
-          ./make_bof.sh reg_save
+          ./make_bof.sh reg_save Remote
 
       - name: reg_set
         run: |
           chmod +x ./make_bof.sh
-          ./make_bof.sh reg_set
+          ./make_bof.sh reg_set Remote
 
       - name: sc_config
         run: |
           chmod +x ./make_bof.sh
-          ./make_bof.sh sc_config
+          ./make_bof.sh sc_config Remote
 
       - name: sc_create
         run: |
           chmod +x ./make_bof.sh
-          ./make_bof.sh sc_create
+          ./make_bof.sh sc_create Remote
 
       - name: sc_delete
         run: |
           chmod +x ./make_bof.sh
-          ./make_bof.sh sc_delete
+          ./make_bof.sh sc_delete Remote
 
       - name: sc_description
         run: |
           chmod +x ./make_bof.sh
-          ./make_bof.sh sc_description
+          ./make_bof.sh sc_description Remote
 
       - name: sc_start
         run: |
           chmod +x ./make_bof.sh
-          ./make_bof.sh sc_start
+          ./make_bof.sh sc_start Remote
 
       - name: sc_stop
         run: |
           chmod +x ./make_bof.sh
-          ./make_bof.sh sc_stop
+          ./make_bof.sh sc_stop Remote
 
       - name: schtaskscreate
         run: |
           chmod +x ./make_bof.sh
-          ./make_bof.sh schtaskscreate
+          ./make_bof.sh schtaskscreate Remote
 
       - name: schtasksdelete
         run: |
           chmod +x ./make_bof.sh
-          ./make_bof.sh schtasksdelete
+          ./make_bof.sh schtasksdelete Remote
 
       - name: schtasksrun
         run: |
           chmod +x ./make_bof.sh
-          ./make_bof.sh schtasksrun
+          ./make_bof.sh schtasksrun Remote
 
       - name: schtasksstop
         run: |
           chmod +x ./make_bof.sh
-          ./make_bof.sh schtasksstop
+          ./make_bof.sh schtasksstop Remote
 
       - name: setuserpass
         run: |
           chmod +x ./make_bof.sh
-          ./make_bof.sh setuserpass
+          ./make_bof.sh setuserpass Remote
 
       - name: shspawnas
         run: |
           chmod +x ./make_bof.sh
-          ./make_bof.sh shspawnas
+          ./make_bof.sh shspawnas Remote
 
       - name: suspendresume
         run: |
           chmod +x ./make_bof.sh
-          ./make_bof.sh suspendresume
+          ./make_bof.sh suspendresume Remote
 
       - name: unexpireuser
         run: |
           chmod +x ./make_bof.sh
-          ./make_bof.sh unexpireuser
+          ./make_bof.sh unexpireuser Remote
 
       - name: get_priv
         run: |
           chmod +x ./make_bof.sh
-          ./make_bof.sh get_priv
+          ./make_bof.sh get_priv Remote
 
       - name: ghost_task
         run: |
           chmod +x ./make_bof.sh
-          ./make_bof.sh ghost_task
+          ./make_bof.sh ghost_task Remote
 
       - name: sc_failure
         run: |
           chmod +x ./make_bof.sh
-          ./make_bof.sh sc_failure
+          ./make_bof.sh sc_failure Remote
 
       - name: slack_cookie
         run: |
           chmod +x ./make_bof.sh
-          ./make_bof.sh slack_cookie
+          ./make_bof.sh slack_cookie Remote
 
       - name: clipboard
         run: |
           chmod +x ./make_bof.sh
-          ./make_bof_injection.sh clipboard
+          ./make_bof.sh clipboard Injection
 
       - name: conhost
         run: |
           chmod +x ./make_bof.sh
-          ./make_bof_injection.sh conhost
+          ./make_bof.sh conhost Injection
 
       - name: createremotethread
         run: |
           chmod +x ./make_bof.sh
-          ./make_bof_injection.sh createremotethread
+          ./make_bof.sh createremotethread Injection
 
       - name: ctray
         run: |
           chmod +x ./make_bof.sh
-          ./make_bof_injection.sh ctray
+          ./make_bof.sh ctray Injection
 
       - name: dde
         run: |
           chmod +x ./make_bof.sh
-          ./make_bof_injection.sh dde
+          ./make_bof.sh dde Injection
 
       - name: kernelcallbacktable
         run: |
           chmod +x ./make_bof.sh
-          ./make_bof_injection.sh kernelcallbacktable
+          ./make_bof.sh kernelcallbacktable Injection
 
       - name: ntcreatethread
         run: |
           chmod +x ./make_bof.sh
-          ./make_bof_injection.sh ntcreatethread
+          ./make_bof.sh ntcreatethread Injection
 
       - name: ntqueueapcthread
         run: |
           chmod +x ./make_bof.sh
-          ./make_bof_injection.sh ntqueueapcthread
+          ./make_bof.sh ntqueueapcthread Injection
 
       - name: setthreadcontext
         run: |
           chmod +x ./make_bof.sh
-          ./make_bof_injection.sh setthreadcontext
+          ./make_bof.sh setthreadcontext Injection
 
       - name: svcctrl
         run: |
           chmod +x ./make_bof.sh
-          ./make_bof_injection.sh svcctrl
+          ./make_bof.sh svcctrl Injection
 
       - name: tooltip
         run: |
           chmod +x ./make_bof.sh
-          ./make_bof_injection.sh tooltip
+          ./make_bof.sh tooltip Injection
 
       - name: uxsubclassinfo
         run: |
           chmod +x ./make_bof.sh
-          ./make_bof_injection.sh uxsubclassinfo
+          ./make_bof.sh uxsubclassinfo Injection
 
       - name: "Publish Release"
         uses: "marvinpinto/action-automatic-releases@latest"
