@@ -1,7 +1,7 @@
 {
     "name": "ctray",
     "version": "v0.0.0",
-    "command_name": "remote-inject-ctray",
+    "command_name": "inject-ctray",
     "extension_author": "0xbad53c",
     "original_author": "TrustedSec",
     "repo_url": "https://github.com/sliverarmory/CS-Remote-OPs-BOF",

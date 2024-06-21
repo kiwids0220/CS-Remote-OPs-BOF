@@ -1,7 +1,7 @@
 {
     "name": "svcctrl",
     "version": "v0.0.0",
-    "command_name": "remote-inject-svcctrl",
+    "command_name": "inject-svcctrl",
     "extension_author": "0xbad53c",
     "original_author": "TrustedSec",
     "repo_url": "https://github.com/sliverarmory/CS-Remote-OPs-BOF",
