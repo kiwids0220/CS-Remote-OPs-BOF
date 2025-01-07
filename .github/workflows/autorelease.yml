@@ -195,6 +195,26 @@ jobs:
           chmod +x ./make_bof.sh
           ./make_bof.sh slack_cookie Remote
 
+      - name: adcs_request_on_behalf
+        run: |
+          chmod +x ./make_bof.sh
+          ./make_bof.sh adcs_request_on_behalf Remote
+
+      - name: global_unprotect
+        run: |
+          chmod +x ./make_bof.sh
+          ./make_bof.sh global_unprotect Remote
+
+      - name: make_token_cert
+        run: |
+          chmod +x ./make_bof.sh
+          ./make_bof.sh make_token_cert Remote
+
+      - name: slackKey
+        run: |
+          chmod +x ./make_bof.sh
+          ./make_bof.sh slackKey Remote
+
       - name: clipboard
         run: |
           chmod +x ./make_bof.sh

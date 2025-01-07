@@ -1,0 +1,38 @@
+{
+    "name": "make_token_cert",
+    "version": "0.0.0",
+    "command_name": "remote-make_token_cert",
+    "extension_author": "c2biz",
+    "original_author": "TrustedSec",
+    "repo_url": "https://github.com/sliverarmory/CS-Remote-OPs-BOF",
+    "help": "Applies an impersonation token based on the Alt Name in a supplied .pfx file",
+    "long_help": "Takes the path to a .pfx and optionally the password to decrypt the .pfx. Reads it into the certificate store for the current user and creates an impersonation token with it. Then deletes it from the users certificate store.\n\nUsage make_token_cert <path to .pfx> [opt: password]\n\n",
+    "depends_on": "coff-loader",
+    "entrypoint": "go",
+    "files": [
+      {
+        "os": "windows",
+        "arch": "amd64",
+        "path": "make_token_cert.x64.o"
+      },
+      {
+        "os": "windows",
+        "arch": "386",
+        "path": "make_token_cert.x86.o"
+      }
+    ],
+    "arguments": [
+      {
+        "name": "pfx",
+        "desc": "path to .pfx",
+        "type": "file",
+        "optional": false
+      },
+      {
+        "name": "password",
+        "desc": "pfx password",
+        "type": "wstring",
+        "optional": true
+      }
+    ]
+}
