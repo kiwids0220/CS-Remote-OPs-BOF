@@ -33,16 +33,22 @@
         "type": "wstring",
         "optional": false
       },
+        {
+            "name": "xml",
+            "desc": "The contents of the XML file to write to disk",
+            "type": "wstring",
+            "optional": false,
+        },
       {
         "name": "usermode",
-        "desc": "username for the task <USER | XML | SYSTEM>",
-        "type": "wstring",
+        "desc": "0 for USER, 1 for SYSTEM, 2 for PRINCIPAL",
+        "type": "int",
         "optional": false
       },
       {
         "name": "forcemode",
-        "desc": "creation disposition <CREATE | UPDATE>",
-        "type": "wstring",
+        "desc": "Force boolean, 0 or 1",
+        "type": "int",
         "optional": false
       }
     ]
